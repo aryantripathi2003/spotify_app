@@ -1,0 +1,33 @@
+network:
+  name: kafka-network
+
+zookeeper:
+  appName: zookeeper-app
+  image:
+    repository: confluentinc/cp-zookeeper
+    tag: 7.3.2
+  service:
+    port: 2181
+    targetPort: 2181
+  data:
+    name: zookeeper-data
+    storage: 1024Mi
+  log:
+    name: zookeeper-log
+    storage: 1024Mi
+
+kafka:
+  appName: kafka-app
+  initContainer:
+    name: wait-for-zookeeper
+    image:
+      repository: busybox
+  image:
+    repository: confluentinc/cp-kafka
+    tag: 7.0.1
+  service:
+    port: 9092
+    targetPort: 9092
+  data:
+    name: kafka-data
+    storage: 1Gi

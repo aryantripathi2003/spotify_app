@@ -1,0 +1,9 @@
+appName: quarkus-app
+
+service:
+    port: 8080
+    targetPort: 8080
+
+image:
+    repository: aryantripathi2003/spotify-api
+    tag: latestkub

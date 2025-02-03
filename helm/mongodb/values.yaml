@@ -1,0 +1,19 @@
+appName: mongodb-app
+replicas: 1
+
+service:
+  port: 27017
+  targetPort: 27017
+
+image:
+  repository: mongo
+  tag: latest
+
+volume:
+  name: mongodb-storage
+  pv:
+    name: mongodb-pv
+    storage: 3Gi
+  pvc:
+    name: mongodb-pvc
+    storage: 1Gi

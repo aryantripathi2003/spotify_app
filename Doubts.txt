@@ -1,0 +1,22 @@
+what are other use cases of kafka like do we use kafka to send data from mongo to the user using an endpoint?
+
+like how do we handle different schemas with kafka as 1:1 correspondence between topic and schema?
+
+any better methods to handle response from an external api with extra fields like here needed to make AlbumsWrapper, Albums(for array of albums)?
+
+can we implement healthchecks for all services like mongo, redis, kafka and whats the difference between liveness and readiness probes?
+
+how can we implement transactions in quarkus @Transactional doesnt work?
+
+how does multiple consumer in a group and multiple consumers work in quarkus uacode will have multiple ofcourse?
+
+do we always need to write custom codecs for mongo like this?
+
+how do we use graylog and grafana
+
+GO MORE IN DEPTH-
+    use semantic search in elasticsearch from any field present
+    opentelemetry for your project
+    linkerd and service meshes
+    include graylog and grafana for your project
+

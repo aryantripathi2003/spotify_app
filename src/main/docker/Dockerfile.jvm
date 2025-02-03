@@ -1,0 +1,38 @@
+####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode
+#
+# Before building the container image run:
+# ./gradlew build
+#
+# Then, build the image with:
+# docker build -f src/main/docker/Dockerfile.jvm -t aryantripathi2003/spotify-api:latest .
+#
+# To build for kubernetes change the uri in application.properties to the service name of the database
+# docker build -f src/main/docker/Dockerfile.jvm -t aryantripathi2003/spotify-api:latestkub .
+#
+# Then push the image on docker hub
+# docker push aryantripathi2003/spotify-api:latestkub
+#
+# Then run the container using:
+# docker run -i --rm -p 8080:8080 quarkus/spotify_clone-jvm
+#
+# If you want to include the debug port into your docker image
+# you will have to expose the debug port (default 5005 being the default) like this :  EXPOSE 8080 5005.
+# Additionally you will have to set -e JAVA_DEBUG=true and -e JAVA_DEBUG_PORT=*:5005
+# when running the container
+#
+# Then run the container using :
+#
+# docker run -i --rm -p 8080:8080 quarkus/spotify_clone-jvm
+#
+
+FROM amazoncorretto:21
+WORKDIR /app
+#COPY target/quarkus-app-*.jar /app/app.jar
+COPY --chown=185 build/quarkus-app/lib/ /deployments/lib/
+COPY --chown=185 build/quarkus-app/*.jar /deployments/
+COPY --chown=185 build/quarkus-app/app/ /deployments/app/
+COPY --chown=185 build/quarkus-app/quarkus/ /deployments/quarkus/
+EXPOSE 8080
+WORKDIR /deployments
+ENTRYPOINT ["java", "-jar", "quarkus-run.jar"]

@@ -1,0 +1,17 @@
+---
+releases:
+  - name: mongodbrelease
+    chart: ./mongodb
+    installed: false
+  - name: redisrelease
+    chart: ./redis
+    installed: false
+  - name: zookeeperkafkarelease
+    chart: ./zookeeper_kafka
+    installed: false
+  - name: quarkusrelease
+    chart: ./quarkus
+    installed: false
+  - name: elasticsearchrelease
+    chart: ./elasticsearch
+    installed: false

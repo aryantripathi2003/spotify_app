@@ -1,0 +1,1 @@
+Run minikube service <name> to get the IP address of the quarkus container

@@ -1,0 +1,19 @@
+appName: redis-app
+replicas: 1
+
+service:
+  port: 6379
+  targetPort: 6379
+
+image:
+  repository: redis/redis-stack
+  tag: latest
+
+volume:
+  name: redis-storage
+  pv:
+    name: redis-pv
+    storage: 1Gi
+  pvc:
+    name: redis-pvc
+    storage: 500Mi

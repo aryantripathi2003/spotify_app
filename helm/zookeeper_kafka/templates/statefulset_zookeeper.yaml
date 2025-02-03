@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    service: {{ .Values.zookeeper.appName }}
+  name: {{ .Values.zookeeper.appName }}
+spec:
+  serviceName: {{ .Values.zookeeper.appName }}
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Values.zookeeper.appName }}
+  template:
+    metadata:
+      labels:
+        network/kafka-network: "true"
+        service: {{ .Values.zookeeper.appName }}
+    spec:
+      securityContext:
+        fsGroup: 1000
+      enableServiceLinks: false
+      containers:
+        - name: {{ .Values.zookeeper.appName }}
+          imagePullPolicy: Always
+          image: "{{ .Values.zookeeper.image.repository }}:{{ .Values.zookeeper.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.zookeeper.service.port }}
+          env:
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+            - name: ZOOKEEPER_DATA_DIR
+              value: "/var/lib/zookeeper/data"
+            - name: ZOOKEEPER_LOG_DIR
+              value: "/var/lib/zookeeper/log"
+            - name: ZOOKEEPER_SERVER_ID
+              value: "1"
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/zookeeper/data
+              name: {{ .Values.zookeeper.data.name }}
+            - mountPath: /var/lib/zookeeper/log
+              name: {{ .Values.zookeeper.log.name }}
+      hostname: {{ .Values.zookeeper.appName }}
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.zookeeper.data.name }}
+      spec:
+        storageClassName: standard
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.zookeeper.data.storage }}
+    - metadata:
+        name: {{ .Values.zookeeper.log.name }}
+      spec:
+        storageClassName: standard
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.zookeeper.log.storage }}

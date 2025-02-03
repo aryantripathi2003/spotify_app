@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.volume.persistentVolume.name }}
+spec:
+  capacity:
+    storage: {{ .Values.volume.persistentVolume.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data/elasticsearch"
+    type: DirectoryOrCreate
+  storageClassName: standard

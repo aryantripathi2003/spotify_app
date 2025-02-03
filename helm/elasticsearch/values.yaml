@@ -1,0 +1,18 @@
+appName: elasticsearch-app
+
+image:
+  repository: elasticsearch
+  tag: 8.0.0
+
+volume:
+  name: elasticsearch-storage
+  persistentVolume:
+    name: elasticsearch-pv
+    storage: 3Gi
+  persistentVolumeClaim:
+    name: elasticsearch-pvc
+    storage: 1Gi
+
+service:
+  port: 9200
+  targetPort: 9200
